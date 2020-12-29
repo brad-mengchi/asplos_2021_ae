@@ -3,6 +3,7 @@ all:
 	(cd structure-mem; make)
 	(cd structure-coal; make)
 	(cd structure-concord; make)
+	(cd structure-concord-mem; make)
 	(cd structure-tp; make)
 
 oo-char:
@@ -15,6 +16,5 @@ clean:
 	(cd structure-mem; make clean)
 	(cd structure-coal; make clean)
 	(cd structure-concord; make clean)
+	(cd structure-concord-mem; make clean)
 	(cd structure-tp; make clean)
-	(cd structure_novfunc; make clean)
-	(cd structure_inline; make clean)

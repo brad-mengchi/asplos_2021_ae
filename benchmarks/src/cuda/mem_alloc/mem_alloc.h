@@ -309,7 +309,7 @@ class TypeContainer {
         if (1)
             for (int ii = 0; ii < FUNC_LEN; ii++) {
                 if (vtable[ii] == NULL) break;
-                printf("vtbale [%s][%d]:%p\n", typeid(myType).name(), ii,
+                printf("vtable [%s][%d]:%p\n", typeid(myType).name(), ii,
                        vtable[ii]);
             }
     }
