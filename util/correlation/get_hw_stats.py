@@ -85,7 +85,7 @@ for bench in benchmarks:
                             #print(csv_line[kernel_name_idx],csv_line[-1])
                 if base == 0:
                     base_cycle = exe_cycles
-                base = (base + 1) % 5
+                base = (base + 1) % 6
                 print('{},{}'.format(exe, base_cycle/exe_cycles))
         else:
             # nsight get stats
