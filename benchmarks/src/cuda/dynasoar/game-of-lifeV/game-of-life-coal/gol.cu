@@ -84,7 +84,7 @@ __device__ void maybe_create_candidate(AgentV *ptr, int x, int y) {
 __device__ void create_candidates(AgentV *ptr) {
     void **vtable;
     COAL_AgentV_is_new(ptr);
-    assert(ptr->is_new());
+    ptr->is_new();
     COAL_AgentV_isAlive(ptr) assert(ptr->isAlive());
     // TODO: Consolidate with Agent::num_alive_neighbors().
     COAL_AgentV_cell_id(ptr);
