@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 from optparse import OptionParser
 import os
 import subprocess
@@ -36,6 +37,9 @@ parser.add_option("-p", "--disable_nvprof", dest="disable_nvprof", action="store
                  help="do not use nvprof (decrecated in Turing+)")
 parser.add_option("-C", "--cache", dest="cache", action="store_true",
                  help="Get comprehensive cache hit rate")
+parser.add_option("-M", "--multiple", dest="multiple",
+                 help="Multiple tests number",
+                 default="1")
 
 (options, args) = parser.parse_args()
 common.load_defined_yamls()
@@ -54,6 +58,7 @@ foutput = open(foutput_name, "w")
 fsum = open(fsum_name, "w")
 base = 0
 base_cycle = 0
+multiple_num = int(options.multiple)
 
 for bench in benchmarks:
     edir, ddir, exe, argslist = bench
@@ -63,30 +68,75 @@ for bench in benchmarks:
         this_run_dir = os.path.join(this_directory, "..", "..", "run_hw", options.directory, "device-" + options.device_num, cuda_version, run_name)
         if not options.disable_nvprof:
             #nvprof get stats
-            this_pattern = this_run_dir + '/*.csv.elapsed_cycles_sm.0'
-            for fname in glob.glob(this_pattern):
-                start = 0
-                kernel_name_idx = 0
-                exe_cycles = 0
-                flist = open(fname, "r")
-                lines = flist.readlines()
-                # kernel name needs wildcard match
-                kernel_pattern = options.kernels.replace(",","|")
-                for line in lines:
-                    csv_line = line.split(',')
-                    if start == 0 and len(csv_line) > 5 and csv_line[0].replace("\"", "") == "Device":
-                        start = 1
-                        for idx,element in enumerate(csv_line):
-                            if element.replace("\"", "") == "Kernel":
-                                kernel_name_idx = idx
-                    elif start == 1:
-                        if re.search(kernel_pattern, csv_line[kernel_name_idx]):
-                            exe_cycles += float(csv_line[-1].replace(",", ""))
-                            #print(csv_line[kernel_name_idx],csv_line[-1])
-                if base == 0:
-                    base_cycle = exe_cycles
-                base = (base + 1) % 5
-                print('{},{}'.format(exe, base_cycle/exe_cycles))
+            if options.cycle:
+                # nvprof get cycles
+                this_pattern = this_run_dir + '/*.csv.elapsed_cycles_sm.*'
+                for fname in glob.glob(this_pattern):
+                    start = 0
+                    kernel_name_idx = 0
+                    exe_cycles = 0
+                    flist = open(fname, "r")
+                    lines = flist.readlines()
+                    #print(fname)
+                    # kernel name needs wildcard match
+                    kernel_pattern = options.kernels.replace(",","|")
+                    for line in lines:
+                        csv_line = line.split(',')
+                        if start == 0 and len(csv_line) > 5 and csv_line[0].replace("\"", "") == "Device":
+                            start = 1
+                            for idx,element in enumerate(csv_line):
+                                if element.replace("\"", "") == "Kernel":
+                                    kernel_name_idx = idx
+                        elif start == 1:
+                            if re.search(kernel_pattern, csv_line[kernel_name_idx]):
+                                exe_cycles += float(csv_line[-1].replace(",", ""))
+                                #print(csv_line[kernel_name_idx],csv_line[-1])
+                    if multiple_num == 1:
+                        if base == 0:
+                            base_cycle = exe_cycles
+                        base = (base + 1) % 5
+                        print('{},{}'.format(exe, base_cycle/exe_cycles))
+                    else:
+                        if base == 9:
+                            print(exe_cycles)
+                        elif base == 0:
+                            print('{},{},'.format(exe, exe_cycles), end='')
+                        else:
+                            print('{},'.format(exe_cycles), end='')
+                        base = (base + 1) % multiple_num
+            else:
+                #nvprof get metrics
+                this_pattern = this_run_dir + '/*.csv'
+                for fname in glob.glob(this_pattern):
+                    print(fname)
+                    flist = open(fname, "r")
+                    lines = flist.readlines()
+                    start = 0
+                    metric_line = []
+                    metrics_dict = dict()
+                    kernel_idx = 0
+                    kernel_pattern = options.kernels.replace(",","|")
+                    for line in lines:
+                        csv_line = line.split("\"")
+                        # print(csv_line)
+                        if start == 0 and len(csv_line) > 5 and csv_line[1] == "Device": # metric line
+                            start = 1
+                            metric_line = csv_line
+                            for idx,element in enumerate(csv_line):
+                                if element in metrics_set:
+                                    metrics_dict[element] = [idx, 0]
+                                elif element == "Kernel":
+                                    kernel_idx = idx
+                            #print(metrics_set)
+                            #print(metrics_dict)
+                        elif start == 1 and len(csv_line) > 5:
+                            if re.search(kernel_pattern, csv_line[kernel_idx]):
+                                print(csv_line[kernel_idx])
+                                for e in metrics_dict.values():
+                                    print(e[1], csv_line[e[0]-3])
+                                    e[1] += float(csv_line[e[0]-3].replace(",", ""))
+                            
+                        
         else:
             # nsight get stats
             if options.cycle:
