@@ -117,9 +117,9 @@ for bench in benchmarks:
                     kernel_idx = 0
                     kernel_pattern = options.kernels.replace(",","|")
                     for line in lines:
-                        csv_line = line.split("\"")
-                        # print(csv_line)
-                        if start == 0 and len(csv_line) > 5 and csv_line[1] == "Device": # metric line
+                        csv_line = line[:-1].replace("\"","").split(",")
+                        #print(csv_line)
+                        if start == 0 and len(csv_line) > 5 and csv_line[0] == "Device": # metric line
                             start = 1
                             metric_line = csv_line
                             for idx,element in enumerate(csv_line):
@@ -127,15 +127,27 @@ for bench in benchmarks:
                                     metrics_dict[element] = [idx, 0]
                                 elif element == "Kernel":
                                     kernel_idx = idx
-                            #print(metrics_set)
                             #print(metrics_dict)
                         elif start == 1 and len(csv_line) > 5:
                             if re.search(kernel_pattern, csv_line[kernel_idx]):
-                                print(csv_line[kernel_idx])
-                                for e in metrics_dict.values():
-                                    print(e[1], csv_line[e[0]-3])
-                                    e[1] += float(csv_line[e[0]-3].replace(",", ""))
-                            
+                                #print(csv_line[kernel_idx])
+                                for item in metrics_dict.items():
+                                    print(item[0], item[1][0], csv_line[item[1][0]])
+                                    if item[0] == "tex_cache_hit_rate":
+                                        gld_trans = float(csv_line[metrics_dict["gld_transactions"][0]])
+                                        gst_trans = float(csv_line[metrics_dict["gst_transactions"][0]])
+                                        tex_hit = float(csv_line[item[1][0]])
+                                        item[1][1] += tex_hit * (gld_trans + gst_trans) / 100.0
+                                    else:
+                                        item[1][1] += float(csv_line[item[1][0]])
+                    print('{}'.format(exe), end='')
+                    for item in metrics_dict.items():
+                        if item[0] == "tex_cache_hit_rate":
+                            print(' {}'.format(item[1][1]/(metrics_dict["gld_transactions"][1] + metrics_dict["gst_transactions"][1])), end='')
+                        else:
+                            print(' {}'.format(item[1][1]), end='')
+                    print('\n')
+                    
                         
         else:
             # nsight get stats
