@@ -40,6 +40,8 @@ parser.add_option("-C", "--cache", dest="cache", action="store_true",
 parser.add_option("-M", "--multiple", dest="multiple",
                  help="Multiple tests number",
                  default="1")
+parser.add_option("-r", "--raw", dest="raw", action="store_true",
+                 help="Raw cycle number")
 
 (options, args) = parser.parse_args()
 common.load_defined_yamls()
@@ -92,10 +94,13 @@ for bench in benchmarks:
                                 exe_cycles += float(csv_line[-1].replace(",", ""))
                                 #print(csv_line[kernel_name_idx],csv_line[-1])
                     if multiple_num == 1:
-                        if base == 0:
-                            base_cycle = exe_cycles
-                        base = (base + 1) % 5
-                        print('{},{}'.format(exe, base_cycle/exe_cycles))
+                        if options.raw:
+                            print('{},{}'.format(exe, exe_cycles))
+                        else:
+                            if base == 0:
+                                base_cycle = exe_cycles
+                            base = (base + 1) % 6
+                            print('{},{}'.format(exe, base_cycle/exe_cycles))
                     else:
                         if base == 9:
                             print(exe_cycles)
@@ -108,7 +113,7 @@ for bench in benchmarks:
                 #nvprof get metrics
                 this_pattern = this_run_dir + '/*.csv'
                 for fname in glob.glob(this_pattern):
-                    print(fname)
+                    #print(fname)
                     flist = open(fname, "r")
                     lines = flist.readlines()
                     start = 0
@@ -118,7 +123,6 @@ for bench in benchmarks:
                     kernel_pattern = options.kernels.replace(",","|")
                     for line in lines:
                         csv_line = line[:-1].replace("\"","").split(",")
-                        #print(csv_line)
                         if start == 0 and len(csv_line) > 5 and csv_line[0] == "Device": # metric line
                             start = 1
                             metric_line = csv_line
@@ -132,23 +136,26 @@ for bench in benchmarks:
                             if re.search(kernel_pattern, csv_line[kernel_idx]):
                                 #print(csv_line[kernel_idx])
                                 for item in metrics_dict.items():
-                                    print(item[0], item[1][0], csv_line[item[1][0]])
+                                    #print(item[0], item[1][0], csv_line[item[1][0]])
                                     if item[0] == "tex_cache_hit_rate":
                                         gld_trans = float(csv_line[metrics_dict["gld_transactions"][0]])
                                         gst_trans = float(csv_line[metrics_dict["gst_transactions"][0]])
-                                        tex_hit = float(csv_line[item[1][0]])
-                                        item[1][1] += tex_hit * (gld_trans + gst_trans) / 100.0
+                                        if csv_line[item[1][0]] == '<INVALID>':
+                                            continue
+                                        else:
+                                            tex_hit = float(csv_line[item[1][0]])
+                                            item[1][1] += tex_hit * (gld_trans + gst_trans) / 100.0
                                     else:
                                         item[1][1] += float(csv_line[item[1][0]])
                     print('{}'.format(exe), end='')
                     for item in metrics_dict.items():
                         if item[0] == "tex_cache_hit_rate":
-                            print(' {}'.format(item[1][1]/(metrics_dict["gld_transactions"][1] + metrics_dict["gst_transactions"][1])), end='')
+                            print(',{}'.format(item[1][1]/(metrics_dict["gld_transactions"][1] + metrics_dict["gst_transactions"][1])), end='')
                         else:
-                            print(' {}'.format(item[1][1]), end='')
-                    print('\n')
-                    
-                        
+                            print(',{}'.format(item[1][1]), end='')
+                    print('')
+
+
         else:
             # nsight get stats
             if options.cycle:

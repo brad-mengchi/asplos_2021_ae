@@ -163,6 +163,8 @@ void instrument_function_if_needed(CUcontext ctx, CUfunction func) {
         src_oprd[0] = -1;
 
       // find src regs and mem
+      instr->printDecoded();
+      printf("oprand %d\n", instr->getNumOperands());
       assert(instr->getNumOperands() <= MAX_SRC);
       for (int i = 1; i < MAX_SRC; i++) {
         if (i < instr->getNumOperands()) {

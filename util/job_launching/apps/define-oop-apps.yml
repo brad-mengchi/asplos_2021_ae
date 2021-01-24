@@ -367,3 +367,278 @@ oo-char:
             - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1
         - RAY_inline:
             - 64 64 1000
+
+
+oo-mem-scale:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/"
+    execs:
+        - trafficV_MEM:
+            - 4096
+        - trafficV_MEM:
+            - 16384
+        - trafficV_MEM:
+            - 65536
+        - trafficV_MEM:
+            - 262144
+        - trafficV_MEM:
+            - 1048576
+        - trafficV_MEM:
+            - 4194304
+        - game-of-life_MEM:
+            - ./data/tm.pgm 4096
+        - game-of-life_MEM:
+            - ./data/tm.pgm 16384
+        - game-of-life_MEM:
+            - ./data/tm.pgm 65536
+        - game-of-life_MEM:
+            - ./data/tm.pgm 262144
+        - game-of-life_MEM:
+            - ./data/tm.pgm 1048576
+        - game-of-life_MEM:
+            - ./data/tm.pgm 4194304
+        - structureV_MEM:
+            - 4096
+        - structureV_MEM:
+            - 16384
+        - structureV_MEM:
+            - 65536
+        - structureV_MEM:
+            - 262144
+        - structureV_MEM:
+            - 1048576
+        - structureV_MEM:
+            - 4194304
+        - generationV_MEM:
+            - 4096
+        - generationV_MEM:
+            - 16384
+        - generationV_MEM:
+            - 65536
+        - generationV_MEM:
+            - 262144
+        - generationV_MEM:
+            - 1048576
+        - generationV_MEM:
+            - 4194304
+        - BFS_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - BFS_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - BFS_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - BFS_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - BFS_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - BFS_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - CC_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - CC_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - CC_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - CC_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - CC_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - CC_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - PR_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - PR_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - PR_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - PR_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - PR_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - PR_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - BFSV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - BFSV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - BFSV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - BFSV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - BFSV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - BFSV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - CCV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - CCV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - CCV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - CCV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - CCV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - CCV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - PRV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - PRV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - PRV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - PRV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - PRV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - PRV_MEM:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - RAY_MEM:
+            - 64 64 1000 4096
+        - RAY_MEM:
+            - 64 64 1000 16384
+        - RAY_MEM:
+            - 64 64 1000 65536
+        - RAY_MEM:
+            - 64 64 1000 262144
+        - RAY_MEM:
+            - 64 64 1000 1048576
+        - RAY_MEM:
+            - 64 64 1000 4194304
+
+oo-coal-scale:
+    exec_dir: "../../benchmarks/bin/$CUDA_VERSION/release/"
+    data_dirs: "../../benchmarks/data_dirs/"
+    execs:
+        - trafficV_COAL:
+            - 4096
+        - trafficV_COAL:
+            - 16384
+        - trafficV_COAL:
+            - 65536
+        - trafficV_COAL:
+            - 262144
+        - trafficV_COAL:
+            - 1048576
+        - trafficV_COAL:
+            - 4194304
+        - game-of-life_COAL:
+            - ./data/tm.pgm 4096
+        - game-of-life_COAL:
+            - ./data/tm.pgm 16384
+        - game-of-life_COAL:
+            - ./data/tm.pgm 65536
+        - game-of-life_COAL:
+            - ./data/tm.pgm 262144
+        - game-of-life_COAL:
+            - ./data/tm.pgm 1048576
+        - game-of-life_COAL:
+            - ./data/tm.pgm 4194304
+        - structureV_COAL:
+            - 4096
+        - structureV_COAL:
+            - 16384
+        - structureV_COAL:
+            - 65536
+        - structureV_COAL:
+            - 262144
+        - structureV_COAL:
+            - 1048576
+        - structureV_COAL:
+            - 4194304
+        - generationV_COAL:
+            - 4096
+        - generationV_COAL:
+            - 16384
+        - generationV_COAL:
+            - 65536
+        - generationV_COAL:
+            - 262144
+        - generationV_COAL:
+            - 1048576
+        - generationV_COAL:
+            - 4194304
+        - BFS_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - BFS_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - BFS_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - BFS_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - BFS_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - BFS_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - CC_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - CC_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - CC_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - CC_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - CC_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - CC_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - PR_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - PR_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - PR_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - PR_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - PR_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - PR_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - BFSV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - BFSV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - BFSV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - BFSV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - BFSV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - BFSV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - CCV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - CCV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - CCV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - CCV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - CCV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - CCV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - PRV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4096
+        - PRV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 16384
+        - PRV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 65536
+        - PRV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 262144
+        - PRV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 1048576
+        - PRV_COAL:
+            - ./data/pannotia/pagerank/data/coAuthorsDBLP.graph 1 4194304
+        - RAY_COAL:
+            - 64 64 1000 4096
+        - RAY_COAL:
+            - 64 64 1000 16384
+        - RAY_COAL:
+            - 64 64 1000 65536
+        - RAY_COAL:
+            - 64 64 1000 262144
+        - RAY_COAL:
+            - 64 64 1000 1048576
+        - RAY_COAL:
+            - 64 64 1000 4194304

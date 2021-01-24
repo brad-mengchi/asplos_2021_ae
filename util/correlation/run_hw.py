@@ -101,7 +101,7 @@ for bench in benchmarks:
         if not options.cycle_only and options.prof_only:
             if not options.disable_nvprof:
                 sh_contents += "\nexport CUDA_VERSION=\"" + cuda_version + "\"; export CUDA_VISIBLE_DEVICES=\"" + options.device_num +\
-                    "\" ; nvprof --concurrent-kernels off --print-gpu-trace -u us --metrics " + options.metric + " --demangling off --csv --log-file " +\
+                    "\" ; nvprof --concurrent-kernels off --print-gpu-trace -u us --kernels " + options.kernel_regex + " --metrics " + options.metric + " --demangling off --csv --log-file " +\
                     os.path.join(this_run_dir,logfile) + " " + os.path.join(this_directory, edir,exe) + " " + str(args) + " "
             if options.nsight_profiler:
                 sh_contents += "\nexport CUDA_VERSION=\"" + cuda_version + "\"; export CUDA_VISIBLE_DEVICES=\"" + options.device_num +\

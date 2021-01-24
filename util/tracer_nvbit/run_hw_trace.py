@@ -46,8 +46,8 @@ nvbit_tracer_path = os.path.join(this_directory, "tracer_tool")
 
 for bench in benchmarks:
     edir, ddir, exe, argslist = bench
-    ddir = common.dir_option_test(os.path.join(ddir,exe),"",this_directory)
-    edir = common.dir_option_test(edir,"",this_directory)
+    ddir = common.dir_option_test(ddir,"",this_directory)
+    #edir = common.dir_option_test(edir,"",this_directory)
     for args in argslist:
         run_name = os.path.join( exe, common.get_argfoldername( args ) )
 
